@@ -64,7 +64,7 @@ class _LoginRegisterState extends State<loginandreg>{
         widget.onSignedIn();
       }
       catch(e){
-        dialogBox.information(context, "Error!!! ", "Could not sign in. :(");
+        dialogBox.information(context, "Error!", "Signin failed");
         print("Error="+e.toString());
       }
     }
@@ -94,19 +94,22 @@ class _LoginRegisterState extends State<loginandreg>{
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("My app login"),
+        title: new Text("Login Page"),
       ),
-        resizeToAvoidBottomPadding: false,
-        body: new Container(
-        margin: EdgeInsets.all(15.0),
-        child: new Form(
+      resizeToAvoidBottomPadding: true,
+      body: new SingleChildScrollView(
+        reverse: false,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0, bottom:16.0),
+          child: new Form(
 
-          key: formKey,
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: createInputs() + createButtons(),
+            key: formKey,
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: createInputs() + createButtons(),
+            ),
           ),
-        ),
+        )
       ),
     );
   }
@@ -121,18 +124,21 @@ class _LoginRegisterState extends State<loginandreg>{
 
         new TextFormField(
           decoration: new InputDecoration(border: OutlineInputBorder(),labelText: 'Email'),
-          style: new TextStyle(fontSize: 25, color: Colors.amber,),
+          style: new TextStyle(fontSize: 18, color: Colors.amber,),
           validator: (value){
             return value.isEmpty ? 'Email is required.' : null;
           },
           onSaved: (value){
             return _email = value;
           },
+          keyboardType: TextInputType.emailAddress,
+          autofocus: true,
         ),
+
         SizedBox(height: 10.0,),
         new TextFormField(
           decoration: new InputDecoration(border: OutlineInputBorder(),labelText: 'Password'),
-          style: new TextStyle(fontSize: 25, color: Colors.amber,),
+          style: new TextStyle(fontSize: 18, color: Colors.amber,),
           obscureText: true,
           validator: (value){
             return value.isEmpty ? 'Password is required.' : null;
@@ -140,6 +146,7 @@ class _LoginRegisterState extends State<loginandreg>{
           onSaved: (value){
             return _password = value;
           },
+          keyboardType: TextInputType.text,
         ),
         SizedBox(height: 20.0,),
       ];
@@ -166,6 +173,7 @@ class _LoginRegisterState extends State<loginandreg>{
             child: new Text("Login",style: new TextStyle(fontSize: 20.0)),
             textColor: Colors.white,
             color: Colors.green,
+            padding: const EdgeInsets.all(16.0),
             onPressed: validateAndSubmit,
           ),
 
@@ -197,3 +205,5 @@ class _LoginRegisterState extends State<loginandreg>{
     }
   }
 }
+
+
